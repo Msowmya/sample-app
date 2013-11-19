@@ -5,6 +5,7 @@ def full_title(page_title)
   else
     "#{base_title} | #{page_title}"
   end
+end
   def sign_in(user, options={})
    if options[:no_capybara]
    remember_token = User.new_remember_token
@@ -18,4 +19,4 @@ def full_title(page_title)
    end
   end
 
-end
+

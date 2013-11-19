@@ -59,19 +59,29 @@ describe "AuthenticationPages" do
       end
 
       describe "in users controller"do
-       describe"visiting the edit page" do
-         before{visit edit_user_path(user)}
-         it { should have_title('Sign in')}
+        describe"visiting the edit page" do
+          before{visit edit_user_path(user)}
+          it { should have_title('Sign in')}
+        end
+        describe "submitting to the update action" do
+          before {patch user_path(user)}
+          specify { expect(response).to redirect_to (signin_path)}
+        end
+        describe "visiting users index" do
+          before { visit users_path }
+          it { should have_title('Sign in')}
+        end
       end
-      describe "submitting to the update action" do
-        before {patch user_path(user)}
-        specify { expect(response).to redirect_to (signin_path)}
+      describe "in microposts controller" do
+         describe "when submitting the create action" do
+           before{ post microposts_path }
+           specify { expect(response).to redirect_to (signin_path)}
+         end
+        describe "submitting the destroy action" do
+           before{ delete micropost_path(FactoryGirl.create(:micropost))}
+           specify { expect(response).to redirect_to (signin_path)}
+        end
       end
-      describe "visiting users index" do
-        before { visit users_path }
-        it { should have_title('Sign in')}
-      end
-     end
     end
     describe "as wrong user" do
       let(:user) { FactoryGirl.create(:user) }
